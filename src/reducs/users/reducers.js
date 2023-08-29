@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../store/initialState";
 
-const user = createSlice({
-  name: "user",
+const users = createSlice({
+  name: "users",
   initialState: initialState.users,
   reducers: {
     signInAction(state, { type, payload }) {
@@ -19,6 +19,6 @@ const user = createSlice({
   },
 });
 
-const { signInAction } = user.actions;
+const { signInAction } = users.actions;
 export { signInAction };
-export default user.reducer;
+export default users.reducer;
