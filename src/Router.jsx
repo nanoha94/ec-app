@@ -1,6 +1,6 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router";
-import { Home, SignUp, SignIn } from "./templates";
+import { Routes, Route } from "react-router";
+import { Home, SignUp, SignIn, ProductEdit } from "./templates";
 import Reset from "./templates/Reset";
 import Auth from "./Auth";
 
@@ -16,6 +16,15 @@ const Router = () => {
         element={
           <Auth>
             <Home />
+          </Auth>
+        }
+      />
+      <Route
+        exact
+        path="/product/edit"
+        element={
+          <Auth>
+            <ProductEdit />
           </Auth>
         }
       />
