@@ -3,6 +3,7 @@ import { PrimaryButton, SelectBox, TextInput } from "../components/UIKit";
 import { useDispatch } from "react-redux";
 import { saveProduct } from "../reducs/products/operations";
 import { useNavigate } from "react-router";
+import ImageArea from "../components/UIKit/products/ImageArea";
 
 const ProductEdit = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const ProductEdit = () => {
     <section>
       <h2 className="u-text__headline u-text-center">商品の登録・変更</h2>
       <div className="c-section-container">
+        <ImageArea />
         <TextInput
           fullWidth={true}
           label={"商品名"}
