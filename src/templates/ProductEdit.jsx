@@ -8,6 +8,7 @@ import ImageArea from "../components/UIKit/products/ImageArea";
 const ProductEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -52,7 +53,7 @@ const ProductEdit = () => {
     <section>
       <h2 className="u-text__headline u-text-center">商品の登録・変更</h2>
       <div className="c-section-container">
-        <ImageArea />
+        <ImageArea images={images} setImages={setImages} />
         <TextInput
           fullWidth={true}
           label={"商品名"}
@@ -105,6 +106,7 @@ const ProductEdit = () => {
                   category,
                   gender,
                   price,
+                  images,
                   navigate
                 )
               )
