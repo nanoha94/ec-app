@@ -47,7 +47,6 @@ const SignUp = () => {
       <TextInput
         fullWidth={true}
         label={"ユーザー名"}
-        multiline={false}
         required={true}
         value={username}
         type={"text"}
@@ -56,7 +55,6 @@ const SignUp = () => {
       <TextInput
         fullWidth={true}
         label={"メールアドレス"}
-        multiline={false}
         required={true}
         value={email}
         type={"email"}
@@ -65,7 +63,6 @@ const SignUp = () => {
       <TextInput
         fullWidth={true}
         label={"パスワード"}
-        multiline={false}
         required={true}
         value={password}
         type={"password"}
@@ -74,7 +71,6 @@ const SignUp = () => {
       <TextInput
         fullWidth={true}
         label={"パスワード（再確認）"}
-        multiline={false}
         required={true}
         value={confirmPassword}
         type={"password"}

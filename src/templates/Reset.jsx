@@ -25,7 +25,6 @@ const Reset = () => {
       <TextInput
         fullWidth={true}
         label={"メールアドレス"}
-        multiline={false}
         required={true}
         value={email}
         type={"email"}

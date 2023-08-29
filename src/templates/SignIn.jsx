@@ -32,7 +32,6 @@ const SignIn = () => {
       <TextInput
         fullWidth={true}
         label={"メールアドレス"}
-        multiline={false}
         required={true}
         value={email}
         type={"email"}
@@ -41,7 +40,6 @@ const SignIn = () => {
       <TextInput
         fullWidth={true}
         label={"パスワード"}
-        multiline={false}
         required={true}
         value={password}
         type={"password"}
