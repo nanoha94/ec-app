@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router";
-import { Home, SignUp, SignIn, ProductEdit } from "./templates";
+import { SignUp, SignIn, ProductEdit, ProductList } from "./templates";
 import Reset from "./templates/Reset";
 import Auth from "./Auth";
 
@@ -15,7 +15,7 @@ const Router = () => {
         path="/"
         element={
           <Auth>
-            <Home />
+            <ProductList />
           </Auth>
         }
       />

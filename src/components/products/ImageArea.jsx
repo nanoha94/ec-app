@@ -25,38 +25,43 @@ const ImageArea = (props) => {
         .join("");
 
       const uploadRef = storage.ref("images").child(fileName);
-      
+
       uploadRef.put(blob).then((snapshot) => {
-          snapshot.ref.getDownloadURL().then((downloadURL) => {
-            const newImage = { id: fileName, path: downloadURL };
-            props.setImages((prevState) => [...prevState, newImage]);
-          });
-        })
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          const newImage = { id: fileName, path: downloadURL };
+          props.setImages((prevState) => [...prevState, newImage]);
+        });
+      });
     },
     [props]
   );
 
-  const deleteImage = useCallback(async(id) => {
-    const ret = window.confirm('この画像を削除しますか？');
-    if(!ret){
-      return false;
-    }
-    else{
-      const newImages = props.images.filter(image => image.id !== id);
-      props.setImages(newImages);
-      storage.ref('images').child(id).delete();
-    }
-  }, [props])
+  const deleteImage = useCallback(
+    async (id) => {
+      const ret = window.confirm("この画像を削除しますか？");
+      if (!ret) {
+        return false;
+      } else {
+        const newImages = props.images.filter((image) => image.id !== id);
+        props.setImages(newImages);
+        storage.ref("images").child(id).delete();
+      }
+    },
+    [props]
+  );
 
   return (
     <div>
       <div className="p-grid__list-images">
         {props.images.length > 0 &&
-          props.images.map((image) => {
-            return (
-              <ImagePreview key={image.id} id={image.id} path={image.path} delete={deleteImage} />
-            );
-          })}
+          props.images.map((image) => (
+            <ImagePreview
+              key={image.id}
+              id={image.id}
+              path={image.path}
+              delete={deleteImage}
+            />
+          ))}
       </div>
       <div className="u-text-right">
         <span>商品画像を登録する</span>
