@@ -27,7 +27,17 @@ const Router = () => {
             <ProductEdit />
           </Auth>
         }
-      />
+      >
+        <Route
+          exact
+          path="/product/edit/:id"
+          element={
+            <Auth>
+              <ProductEdit />
+            </Auth>
+          }
+        />
+      </Route>
     </Routes>
   );
 };
