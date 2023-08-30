@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { IconButton } from "@material-ui/core";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { styled } from "styled-components";
-import { storage } from "../../../firebase";
+import { storage } from "../../firebase";
 import ImagePreview from "./ImagePreview";
 
 const StyledIconButton = styled(IconButton)`
