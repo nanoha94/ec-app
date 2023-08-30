@@ -1,19 +1,28 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PrimaryButton, SelectBox, TextInput } from "../components/UIKit";
 import { useDispatch } from "react-redux";
 import { saveProduct } from "../reducs/products/operations";
 import { useNavigate } from "react-router";
-import ImageArea from "../components/UIKit/products/ImageArea";
+import {ImageArea, SetSizeArea} from "../components/products";
+import { db } from "../firebase";
 
 const ProductEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // 商品IDを取得（IDがない場合は商品情報を新規作成）
+  let id = window.location.pathname.split("/product/edit")[1];
+  if (id !== "") {
+    id = id.split("/")[1];
+  }
+
   const [images, setImages] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [gender, setGender] = useState("");
   const [price, setPrice] = useState("");
+  const [sizes, setSizes] = useState([]);
 
   const categoryOptions = [
     { id: "tops", name: "トップス" },
@@ -48,6 +57,24 @@ const ProductEdit = () => {
     },
     [setPrice]
   );
+
+  useEffect(() => {
+    if (id !== "") {
+      db.collection("products")
+        .doc(id)
+        .get()
+        .then((snapshot) => {
+          const data = snapshot.data();
+          setImages(data.images);
+          setName(data.name);
+          setDescription(data.description);
+          setCategory(data.category);
+          setGender(data.gender);
+          setPrice(data.price);
+          setSizes(data.sizes);
+        });
+    }
+  }, []);
 
   return (
     <section>
@@ -94,19 +121,23 @@ const ProductEdit = () => {
           value={price}
           type={"number"}
         />
-        <div className="module-spacer--medium"></div>
+        <div className="module-spacer--small"></div>
+        <SetSizeArea sizes={sizes} setSizes={setSizes} />
+        <div className="module-spacer--small"></div>
         <div className="center">
           <PrimaryButton
             label={"商品情報を保存"}
             onClick={() =>
               dispatch(
                 saveProduct(
+                  id,
+                  images,
                   name,
                   description,
                   category,
                   gender,
                   price,
-                  images,
+                  sizes,
                   navigate
                 )
               )
