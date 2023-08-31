@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import HTMLReactParser from "html-react-parser";
 import ImageSwiper from "../components/products/ImageSwiper";
+import { SizeTable } from "../components/products";
 
 const SliderBox = styled.div`
   margin: 0 auto;
@@ -66,6 +67,7 @@ const ProductDetail = () => {
             <h2 className="u-text__headline">{product.name}</h2>
             <Price>{product.price.toLocaleString()}</Price>
             <div className="module-spacer--small"></div>
+            <SizeTable sizes={product.sizes} />
             <div className="module-spacer--small"></div>
             <p>{returnCodeToBr(product.description)}</p>
           </Detail>
