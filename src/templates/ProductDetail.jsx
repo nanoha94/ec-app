@@ -3,6 +3,7 @@ import { db } from "../firebase";
 import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import HTMLReactParser from "html-react-parser";
+import ImageSwiper from "../components/products/ImageSwiper";
 
 const SliderBox = styled.div`
   margin: 0 auto;
@@ -60,7 +61,7 @@ const ProductDetail = () => {
     <section className="c-section-wrapin">
       {product && (
         <div className="p-grid__row">
-          <SliderBox></SliderBox>
+          <SliderBox><ImageSwiper images={product.images} /></SliderBox>
           <Detail>
             <h2 className="u-text__headline">{product.name}</h2>
             <Price>{product.price.toLocaleString()}</Price>
