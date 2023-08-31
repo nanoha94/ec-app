@@ -4,18 +4,18 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Badge, IconButton } from "@material-ui/core";
 
-const HeaderMenus = () => {
+const HeaderMenus = ({handleDrawerToggle}) => {
   return (
     <>
       <IconButton>
-        <Badge badgeContent={3} color="secondary" >
+        <Badge badgeContent={3} color="secondary" overlap="rectangular" >
           <ShoppingCartIcon />
         </Badge>
       </IconButton>
       <IconButton>
         <FavoriteBorderIcon />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={handleDrawerToggle}>
         <MenuIcon />
       </IconButton>
     </>
