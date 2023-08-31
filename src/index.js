@@ -6,6 +6,8 @@ import * as History from "history";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import createStore from "./reducs/store/store";
+import { MuiThemeProvider } from "@material-ui/core";
+import {theme} from "./assets/theme";
 
 export const history = History.createBrowserHistory();
 export const store = createStore(history);
@@ -14,7 +16,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <BrowserRouter history={history}>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>
 );
