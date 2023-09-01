@@ -1,6 +1,6 @@
 import { FirebaseTimestamp, auth, db } from "../../firebase";
 import initialState from "../store/initialState";
-import { signInAction } from "./reducers";
+import { signInAction, signOutAction } from "./reducers";
 
 // 認証確認
 export const listenAuthState = (navigate) => {
@@ -148,7 +148,7 @@ export const signIn = (email, password, navigate) => {
 export const signOut = (navigate) => {
   return async (dispatch) => {
     auth.signOut().then(() => {
-      dispatch(signInAction(initialState));
+      dispatch(signOutAction(initialState));
       navigate("/signin");
     });
   };
