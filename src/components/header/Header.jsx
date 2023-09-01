@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import { styled } from "styled-components";
 import { AppBar, Toolbar } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { getIsSignIn } from "../../reducs/users/selectors";
 import logo from "../../assets/img/icons/logo.png";
 import { useNavigate } from "react-router";
 import HeaderMenus from "./HeaderMenus";
@@ -29,8 +28,8 @@ const IconButtons = styled.div`
 
 const Header = () => {
   const navigate = useNavigate();
-  const selector = useSelector((state) => state);
-  const isSignedIn = getIsSignIn(selector);
+  const usersSelector = useSelector((state) => state.users);
+  const isSignedIn = usersSelector.isSignIn;
 
   const [open, setOpen] = useState(false);
 

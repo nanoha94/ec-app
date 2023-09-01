@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsSignIn } from "./reducs/users/selectors";
 import { listenAuthState } from "./reducs/users/operations";
 
 const Auth = ({children}) => {
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const dispatch = useDispatch();  
   const navigate = useNavigate();
-  const isSignedIn = getIsSignIn(selector);
+  const usersSelector = useSelector((state) => state.users);
+  const isSignedIn = usersSelector.isSignIn;
 
   // 認証
   useEffect(() => {

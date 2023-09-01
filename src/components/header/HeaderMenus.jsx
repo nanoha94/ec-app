@@ -4,15 +4,16 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Badge, IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsInCart, getUserId } from "../../reducs/users/selectors";
 import { db } from "../../firebase";
 import { fetchProductsInCart } from "../../reducs/users/operations";
 
 const HeaderMenus = ({ handleDrawerToggle }) => {
-  const selector = useSelector((state) => state);
+  const usersSelector = useSelector((state) => state.users);
   const dispatch = useDispatch();
-  const uid = getUserId(selector);
-  const productsInCart = getProductsInCart(selector);
+  const uid = usersSelector.uid;
+  const productsInCart = usersSelector.cart;
+
+
 
   useEffect(() => {
     const unsubscribe = db
