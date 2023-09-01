@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FirebaseTimestamp, db } from "../firebase";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { styled } from "styled-components";
 import HTMLReactParser from "html-react-parser";
 import ImageSwiper from "../components/products/ImageSwiper";
 import { SizeTable } from "../components/products";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { addProductToCart } from "../reducs/users/operations";
 
 const SliderBox = styled.div`
@@ -37,10 +37,9 @@ const Price = styled.p`
 `;
 
 const ProductDetail = () => {
-  const selector = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const path = selector.router.location.pathname;
+  const path = useLocation().pathname;
   const id = path.split("/product/")[1];
   const [product, setProduct] = useState(null);
 
