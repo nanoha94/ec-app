@@ -13,15 +13,13 @@ const HeaderMenus = ({ handleDrawerToggle }) => {
   const uid = usersSelector.uid;
   const productsInCart = usersSelector.cart;
 
-
-
   useEffect(() => {
+    const updatedProductsInCart = [...productsInCart];
     const unsubscribe = db
       .collection("users")
       .doc(uid)
       .collection("cart")
-      .onSnapshot((snapshots) => {
-        const updatedProductsInCart = [...productsInCart];
+      .onSnapshot((snapshots) => {        
         snapshots.docChanges().forEach((change) => {
           const product = change.doc.data();
 
