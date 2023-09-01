@@ -5,6 +5,12 @@ const users = createSlice({
   name: "users",
   initialState: initialState.users,
   reducers: {
+    fetchProductsInCartAction(state, { type, payload }) {
+      return {
+        ...state,
+        cart: [...payload],
+      };
+    },
     signInAction(state, { type, payload }) {
       return {
         ...state,
@@ -19,6 +25,6 @@ const users = createSlice({
   },
 });
 
-const { signInAction, signOutAction } = users.actions;
-export { signInAction, signOutAction };
+const { fetchProductsInCartAction, signInAction, signOutAction } = users.actions;
+export { fetchProductsInCartAction, signInAction, signOutAction };
 export default users.reducer;

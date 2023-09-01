@@ -1,6 +1,28 @@
 import { FirebaseTimestamp, auth, db } from "../../firebase";
 import initialState from "../store/initialState";
-import { signInAction, signOutAction } from "./reducers";
+import { signInAction, signOutAction, fetchProductsInCartAction } from "./reducers";
+
+export const addProductToCart = (addedProduct, navigate) => {
+  return async (dispatch, getState) => {
+    const uid = getState().users.uid;
+    const cartRef = db.collection("users").doc(uid).collection("cart").doc();
+    addedProduct["cartId"] = cartRef.id;
+    await cartRef.set(addedProduct);
+    navigate("/");
+  };
+};
+
+export const fetchProductsInCart = (products) => {
+  return async(dispatch) => {
+     // Timestampをシリアル化
+     const updatedProducts = products.map((product) => ({
+      ...product,
+      added_at: product.added_at ? product.added_at.toString() : '',
+    }));
+     
+   dispatch(fetchProductsInCartAction(updatedProducts));
+  }
+}
 
 // 認証確認
 export const listenAuthState = (navigate) => {
@@ -27,7 +49,7 @@ export const listenAuthState = (navigate) => {
       }
       // 未認証
       else {
-       navigate("/signin");
+        navigate("/signin");
       }
     });
   };
@@ -92,20 +114,27 @@ export const signUp = (
 
 // パスワードリセット
 export const resetPassword = (email, navigate) => {
-  return async(dispatch) => {
-    if(email === "") {
+  return async (dispatch) => {
+    if (email === "") {
       alert("必須項目が未入力です。");
       return false;
-    }else{
-      auth.sendPasswordResetEmail(email).then(() => {
-        alert("入力されたアドレスにパスワードリセット用のメールを送信しました。");
-        navigate('/signin');
-      }).catch(() => {
-        alert("パスワードリセットに失敗しました。通信状況を確認して、再度お試しください。");
-      })
+    } else {
+      auth
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          alert(
+            "入力されたアドレスにパスワードリセット用のメールを送信しました。"
+          );
+          navigate("/signin");
+        })
+        .catch(() => {
+          alert(
+            "パスワードリセットに失敗しました。通信状況を確認して、再度お試しください。"
+          );
+        });
     }
-  }
-}
+  };
+};
 
 // サインイン
 export const signIn = (email, password, navigate) => {

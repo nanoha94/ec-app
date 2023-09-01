@@ -1,14 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Badge, IconButton } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsInCart, getUserId } from "../../reducs/users/selectors";
+import { db } from "../../firebase";
+import { fetchProductsInCart } from "../../reducs/users/operations";
 
-const HeaderMenus = ({handleDrawerToggle}) => {
+const HeaderMenus = ({ handleDrawerToggle }) => {
+  const selector = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const uid = getUserId(selector);
+  const productsInCart = getProductsInCart(selector);
+
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("users")
+      .doc(uid)
+      .collection("cart")
+      .onSnapshot((snapshots) => {
+        const updatedProductsInCart = [...productsInCart];
+        snapshots.docChanges().forEach((change) => {
+          const product = change.doc.data();
+
+          switch (change.type) {
+            case "added":
+              updatedProductsInCart.push(product);
+              break;
+            case "modified":
+              const index = updatedProductsInCart.findIndex(
+                (product) => product.cartId === change.doc.id
+              );
+              updatedProductsInCart[index] = product;
+              break;
+            case "removed":
+              updatedProductsInCart = updatedProductsInCart.filter(
+                (product) => product.cartId !== change.doc.id
+              );
+              break;
+            default:
+              break;
+          }
+        });
+        dispatch(fetchProductsInCart(updatedProductsInCart));
+      });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <>
       <IconButton>
-        <Badge badgeContent={3} color="secondary" overlap="rectangular" >
+        <Badge
+          badgeContent={productsInCart.length}
+          color="secondary"
+          overlap="rectangular"
+        >
           <ShoppingCartIcon />
         </Badge>
       </IconButton>

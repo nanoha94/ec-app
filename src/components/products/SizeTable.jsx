@@ -16,8 +16,7 @@ const IconCell = styled(TableCell)`
   width: 48px;
 `;
 
-const SizeTable = (props) => {
-  const sizes = props.sizes;
+const SizeTable = ({sizes, addProduct}) => {
   return (
     <TableContainer>
       <Table>
@@ -29,7 +28,7 @@ const SizeTable = (props) => {
                   {size.size}
                 </TableCell>
                 <TableCell>残り{size.quantity}点</TableCell>
-                <IconCell>
+                <IconCell onClick={() => addProduct(size.size)}>
                   {size.quantity > 0 ? <ShoppingCartIcon /> : <div>売切</div>}
                 </IconCell>
                 <TableCell>
