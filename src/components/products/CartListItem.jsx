@@ -28,7 +28,6 @@ const StyledText = styled.div`
 
 const CartListItem = ({ product }) => {
   const usersSelector = useSelector((state) => state.users);
-  const uid = usersSelector.uid;
 
   const image = product.images[0].path;
   const name = product.name;
@@ -36,7 +35,12 @@ const CartListItem = ({ product }) => {
   const price = product.price.toLocaleString();
 
   const removeProductFromCart = (id) => {
-    return db.collection("users").doc(uid).collection("cart").doc(id).delete();
+    return db
+      .collection("users")
+      .doc(usersSelector.uid)
+      .collection("cart")
+      .doc(id)
+      .delete();
   };
 
   return (
