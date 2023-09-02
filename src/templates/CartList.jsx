@@ -1,9 +1,15 @@
-import { List } from "@material-ui/core";
+import { List, styled } from "@material-ui/core";
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CartListItem } from "../components/products";
 import { GrayButton, PrimaryButton } from "../components/UIKit";
 import { useNavigate } from "react-router";
+
+const StyledList = styled(List)`
+margin: 0 auto;
+max-width: 512px;
+width: 100%;
+`;
 
 const CartList = () => {
   const navigate = useNavigate();
@@ -11,7 +17,7 @@ const CartList = () => {
   const ProductsInCart = usersSelector.cart;
 
   const goToOrder = useCallback(() => {
-    navigate("/order/confirtm");
+    navigate("/order/confirm");
   }, []);
 
   const backToHome = useCallback(() => {
@@ -21,12 +27,12 @@ const CartList = () => {
   return (
     <section className="c-section-wrapin">
       <h2 className="u-text__headline">ショッピングカート</h2>
-      <List>
+      <StyledList>
         {ProductsInCart.length > 0 &&
           ProductsInCart.map((product) => (
             <CartListItem key={product.cartId} product={product} />
           ))}
-      </List>
+      </StyledList>
       <div className="module-spacer--medium" />
       <div className="p-grid__column">
         <PrimaryButton label={"レジへ進む"} onClick={goToOrder} />
