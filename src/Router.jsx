@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router";
-import { SignUp, SignIn, ProductEdit, ProductList, ProductDetail, CartList } from "./templates";
+import { SignUp, SignIn, ProductEdit, ProductList, ProductDetail, CartList, OrderConfirm } from "./templates";
 import Reset from "./templates/Reset";
 import Auth from "./Auth";
 
@@ -53,6 +53,15 @@ const Router = () => {
         element={
           <Auth>
             <CartList />
+          </Auth>
+        }
+      ></Route>
+      <Route
+        exact
+        path="/order/confirm"
+        element={
+          <Auth>
+            <OrderConfirm />
           </Auth>
         }
       ></Route>
