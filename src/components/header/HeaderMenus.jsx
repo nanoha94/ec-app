@@ -16,7 +16,7 @@ const HeaderMenus = ({ handleDrawerToggle }) => {
   const productsInCart = usersSelector.cart;
 
   useEffect(() => {
-    const updatedProductsInCart = [...productsInCart];
+    let updatedProductsInCart = [...productsInCart];
     const unsubscribe = db
       .collection("users")
       .doc(uid)
