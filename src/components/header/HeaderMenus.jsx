@@ -6,10 +6,12 @@ import { Badge, IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../firebase";
 import { fetchProductsInCart } from "../../reducs/users/operations";
+import { useNavigate } from "react-router";
 
 const HeaderMenus = ({ handleDrawerToggle }) => {
   const usersSelector = useSelector((state) => state.users);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const uid = usersSelector.uid;
   const productsInCart = usersSelector.cart;
 
@@ -55,7 +57,7 @@ const HeaderMenus = ({ handleDrawerToggle }) => {
           color="secondary"
           overlap="rectangular"
         >
-          <ShoppingCartIcon />
+          <ShoppingCartIcon onClick={() => navigate('/cart')}/>
         </Badge>
       </IconButton>
       <IconButton>
