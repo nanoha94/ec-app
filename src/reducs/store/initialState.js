@@ -1,5 +1,6 @@
 const initialState = {
   users: {
+    orders: [],
     cart: [],
     isSignIn: false,
     role: "",

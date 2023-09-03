@@ -1,6 +1,12 @@
 import { FirebaseTimestamp, auth, db } from "../../firebase";
+import { dateToString, datetimeToString } from "../../function/common";
 import initialState from "../store/initialState";
-import { signInAction, signOutAction, fetchProductsInCartAction } from "./reducers";
+import {
+  signInAction,
+  signOutAction,
+  fetchProductsInCartAction,
+  fetchOrdersHistoryAction,
+} from "./reducers";
 
 export const addProductToCart = (addedProduct, navigate) => {
   return async (dispatch, getState) => {
@@ -12,17 +18,43 @@ export const addProductToCart = (addedProduct, navigate) => {
   };
 };
 
+export const fetchOrdersHistory = () => {
+  return async (dispatch, getState) => {
+    const uid = getState().users.uid;
+    const list = [];
+
+    db.collection("users")
+      .doc(uid)
+      .collection("orders")
+      .orderBy("updated_at", "desc")
+      .get()
+      .then((snapshots) => {
+        snapshots.forEach((snapshot) => {
+          const order = snapshot.data();
+
+          order.created_at = datetimeToString(order.created_at.toDate());
+          order.shipping_date = dateToString(order.shipping_date.toDate());
+          order.updated_at = datetimeToString(order.updated_at.toDate());
+
+          list.push(order);
+        });
+
+        dispatch(fetchOrdersHistoryAction(list));
+      });
+  };
+};
+
 export const fetchProductsInCart = (products) => {
-  return async(dispatch) => {
-     // Timestampをシリアル化
-     const updatedProducts = products.map((product) => ({
+  return async (dispatch) => {
+    // Timestampをシリアル化
+    const updatedProducts = products.map((product) => ({
       ...product,
-      added_at: product.added_at ? product.added_at.toString() : '',
+      added_at: product.added_at ? product.added_at.toString() : "",
     }));
-     
-   dispatch(fetchProductsInCartAction(updatedProducts));
-  }
-}
+
+    dispatch(fetchProductsInCartAction(updatedProducts));
+  };
+};
 
 // 認証確認
 export const listenAuthState = (navigate) => {

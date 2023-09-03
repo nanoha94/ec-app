@@ -5,6 +5,12 @@ const users = createSlice({
   name: "users",
   initialState: initialState.users,
   reducers: {
+    fetchOrdersHistoryAction(state, {type, payload}){
+      return{
+        ...state,
+        orders: [...payload],
+      }
+    },
     fetchProductsInCartAction(state, { type, payload }) {
       return {
         ...state,
@@ -25,6 +31,6 @@ const users = createSlice({
   },
 });
 
-const { fetchProductsInCartAction, signInAction, signOutAction } = users.actions;
-export { fetchProductsInCartAction, signInAction, signOutAction };
+const { fetchOrdersHistoryAction, fetchProductsInCartAction, signInAction, signOutAction } = users.actions;
+export { fetchOrdersHistoryAction, fetchProductsInCartAction, signInAction, signOutAction };
 export default users.reducer;
