@@ -3,7 +3,7 @@ import { PrimaryButton, SelectBox, TextInput } from "../components/UIKit";
 import { useDispatch } from "react-redux";
 import { saveProduct } from "../reducs/products/operations";
 import { useNavigate } from "react-router";
-import {ImageArea, SetSizeArea} from "../components/products";
+import { ImageArea, SetSizeArea } from "../components/products";
 import { db } from "../firebase";
 
 const ProductEdit = () => {
@@ -20,16 +20,10 @@ const ProductEdit = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [gender, setGender] = useState("");
   const [price, setPrice] = useState("");
   const [sizes, setSizes] = useState([]);
-
-  const categoryOptions = [
-    { id: "tops", name: "トップス" },
-    { id: "shirts", name: "シャツ" },
-    { id: "pants", name: "パンツ" },
-    { id: "skirt", name: "スカート" },
-  ];
 
   const genderOptions = [
     { id: "all", name: "すべて" },
@@ -76,6 +70,22 @@ const ProductEdit = () => {
     }
   }, []);
 
+  useEffect(() => {
+    db.collection("categories")
+      .orderBy("order", "asc")
+      .get()
+      .then((snapshots) => {
+        const list = [];
+        snapshots.forEach((snapshot) => {
+          const data = snapshot.data();
+          list.push({
+            id: data.id, name: data.name
+          });
+        });
+        setCategories(list);
+      });
+  });
+
   return (
     <section>
       <h2 className="u-text__headline u-text-center">商品の登録・変更</h2>
@@ -102,7 +112,7 @@ const ProductEdit = () => {
         <SelectBox
           label={"カテゴリー"}
           required={true}
-          options={categoryOptions}
+          options={categories}
           select={setCategory}
           value={category}
         />

@@ -2,15 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../reducs/products/operations";
 import { ProductCard } from "../components/products";
+import { useSearchParams } from "react-router-dom";
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const productsSelector = useSelector((state) => state.products);
   const products = productsSelector.list;
+  const [searchParams] = useSearchParams();
+  const gender = searchParams.get('gender') || "";
+  const category = searchParams.get('category') || "";
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(fetchProducts(gender, category));
+  }, [searchParams]);
 
   return (
     <section className="c-section--wrapin">
